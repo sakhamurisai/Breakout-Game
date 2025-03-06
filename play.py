@@ -10,14 +10,10 @@ class GamePlay:
         self.paddle = turtle.Turtle()
 
         # Level barriers
-        self.level1_1 = self.barrier.level1_list1
-        self.level1_2 = self.barrier.level1_list2
-        self.level2_1 = self.barrier.level2_list1
-        self.level2_2 = self.barrier.level2_list2
-        self.level3_1 = self.barrier.level3_list1
-        self.level3_2 = self.barrier.level3_list2
-        self.level4_1 = self.barrier.level4_list1
-        self.level4_2 = self.barrier.level4_list2
+        self.level1_1,self.level1_2 = self.barrier.level_1()
+        self.level2_1,self.level2_2 = self.barrier.level_2()
+        self.level3_1,self.level3_2 = self.barrier.level_3()
+        self.level4_1,self.level4_2  = self.barrier.level_4()
 
         self.main_barrier = self.barrier.main_barrier()
         self.sub_main_barriers = self.barrier.mgb
@@ -44,7 +40,6 @@ class GamePlay:
                 self.increase_speed(0.0025)
 
     def ball_hits_main_barrier(self):
-
         if self.ball.distance(self.main_barrier) < 20:
             self.ball.bounce_y()
             self.main_barrier_hits += 1
@@ -55,13 +50,18 @@ class GamePlay:
                 self.main_barrier.hideturtle()
 
     def check_collision(self, level_blocks):
-
+        remove_blocks = []
         for block in level_blocks:
             if self.ball.distance(block) < 20:
-                block.hideturtle()
-                level_blocks.remove(block)
+                print("--------inside the loop------")
+                remove_blocks.append(block)
                 self.ball.bounce_y()
-                self.increase_speed(0.0025)
+                self.increase_speed(0.0015)
+        for t in remove_blocks:
+            if t in level_blocks:
+                print(t)
+                level_blocks.remove(t)
+
 
     def level1_collision(self):
         self.check_collision(self.level1_1)
@@ -85,10 +85,10 @@ class GamePlay:
 
     def paddle_play(self):
         self.paddle.shape("square")
-        self.paddle.shapesize(stretch_wid=1, stretch_len=1, outline=None)
+        self.paddle.shapesize(stretch_wid=0.5, stretch_len=3, outline=None)
         self.paddle.color("silver")
         self.paddle.penup()
-        self.paddle.goto(0,-260)
+        self.paddle.goto(0,-290)
 
 
     def move_left(self):
