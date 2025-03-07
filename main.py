@@ -1,4 +1,4 @@
-import turtle
+from paddle import Paddle
 from turtle import Screen
 from barriers import Barriers
 from play import GamePlay
@@ -11,18 +11,25 @@ screen.listen()
 
 barrier = Barriers()
 gameplay = GamePlay()
+paddle = Paddle()
+
 barrier.main_barrier()
+
 barrier.main_gide_barriers()
+
 barrier.level_4()
 barrier.level_3()
 barrier.level_2()
 barrier.level_1()
-left = gameplay.move_left()
-right = gameplay.move_right()
-screen.onkey(left,"Left")
-screen.onkey(right,"Right")
+
+
+screen.onkeypress(paddle.move_left, "Left")
+screen.onkeypress(paddle.move_right, "Right")
+
+screen.tracer(0)
 game_on = True
 while game_on:
+
     screen.update()
     gameplay.ball_movement()
     gameplay.ball_hits_wall()
@@ -32,6 +39,6 @@ while game_on:
     gameplay.level4_collision()
     gameplay.ball_hits_mgb()
     gameplay.ball_hits_main_barrier()
-    gameplay.paddle_play()
+
 
 

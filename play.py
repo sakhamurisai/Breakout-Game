@@ -10,10 +10,10 @@ class GamePlay:
         self.paddle = turtle.Turtle()
 
         # Level barriers
-        self.level1_1,self.level1_2 = self.barrier.level_1()
-        self.level2_1,self.level2_2 = self.barrier.level_2()
-        self.level3_1,self.level3_2 = self.barrier.level_3()
-        self.level4_1,self.level4_2  = self.barrier.level_4()
+        self.level1_1, self.level1_2 = self.barrier.level_1()
+        self.level2_1, self.level2_2 = self.barrier.level_2()
+        self.level3_1, self.level3_2 = self.barrier.level_3()
+        self.level4_1, self.level4_2 = self.barrier.level_4()
 
         self.main_barrier = self.barrier.main_barrier()
         self.sub_main_barriers = self.barrier.mgb
@@ -50,17 +50,10 @@ class GamePlay:
                 self.main_barrier.hideturtle()
 
     def check_collision(self, level_blocks):
-        remove_blocks = []
-        for block in level_blocks:
+        for block in level_blocks[::-1]:
             if self.ball.distance(block) < 20:
-                print("--------inside the loop------")
-                remove_blocks.append(block)
                 self.ball.bounce_y()
                 self.increase_speed(0.0015)
-        for t in remove_blocks:
-            if t in level_blocks:
-                print(t)
-                level_blocks.remove(t)
 
 
     def level1_collision(self):
@@ -82,19 +75,3 @@ class GamePlay:
     def increase_speed(self, percentage):
         self.ball.move_speed *= (1 + percentage)
 
-
-    def paddle_play(self):
-        self.paddle.shape("square")
-        self.paddle.shapesize(stretch_wid=0.5, stretch_len=3, outline=None)
-        self.paddle.color("silver")
-        self.paddle.penup()
-        self.paddle.goto(0,-290)
-
-
-    def move_left(self):
-        self.paddle.setheading(180)  # Face left
-        self.paddle.forward(10)
-
-    def move_right(self):
-        self.paddle.setheading(0)  # Face right
-        self.paddle.forward(10)
